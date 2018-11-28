@@ -15,7 +15,6 @@ def hello():
 
 @app.route('/api/v1/products')
 def products():
-
     return jsonify(PRODUCTS)
 
 @app.route('/api/v1/products/<int:product_id>', methods=['GET', 'DELETE'])
@@ -34,4 +33,3 @@ def get_del_product(product_id):
                 PRODUCTS.remove(product)
                 return '', 204
     return 'Product Not Found', 404
-

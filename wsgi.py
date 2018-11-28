@@ -35,12 +35,30 @@ def products():
     else:
         return "Unimplemented method {0}".format(request.method), 500
 
-@app.route('/api/v1/products/<int:product_id>', methods=['GET', 'DELETE'])
+@app.route('/api/v1/products/<int:product_id>', methods=['GET', 'DELETE', 'POST'])
 def manage_product(product_id):
     if request.method in ['GET', 'DELETE']:
         return get_del_product(product_id)
+    elif request.method == 'POST':
+        return update_product(product_id)
     else:
         return "Unimplemented method {0}".format(request.method), 500
+
+def update_product(product_id):
+    for product in PRODUCTS:
+        if product['id'] == product_id:
+            payload = request.get_json()
+            try:
+                name = payload['name']
+                if name:
+                    product['name'] = name
+                    return '', 204
+                else:
+                    return 'Invalid Name in payload', 422
+            except KeyError:
+                return 'No name in payload', 422
+
+    return 'Product Not Found', 422
 
 def get_del_product(product_id):
     for product in PRODUCTS:

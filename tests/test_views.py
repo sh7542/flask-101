@@ -41,5 +41,15 @@ class TestViews(TestCase):
         response = self.client.post("/api/v1/products", data=json.dumps(payload), content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
+    def test_update_valid(self):
+        payload = {'name': 'test-update'}
+        response = self.client.post("/api/v1/products/1", data=json.dumps(payload), content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+
+    def test_update_invalid(self):
+        payload = {'name': 'test-update'}
+        response = self.client.post("/api/v1/products/65535", data=json.dumps(payload), content_type='application/json')
+        self.assertEqual(response.status_code, 422)
+
 
 

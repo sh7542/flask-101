@@ -35,11 +35,11 @@ def products():
     else:
         return "Unimplemented method {0}".format(request.method), 500
 
-@app.route('/api/v1/products/<int:product_id>', methods=['GET', 'DELETE', 'POST'])
+@app.route('/api/v1/products/<int:product_id>', methods=['GET', 'DELETE', 'PATCH'])
 def manage_product(product_id):
     if request.method in ['GET', 'DELETE']:
         return get_del_product(product_id)
-    elif request.method == 'POST':
+    elif request.method == 'PATCH':
         return update_product(product_id)
     else:
         return "Unimplemented method {0}".format(request.method), 500
